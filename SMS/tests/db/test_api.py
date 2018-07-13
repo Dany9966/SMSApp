@@ -56,22 +56,22 @@ class TestAPI(unittest.TestCase):
     @mock.patch('SMS.db.session')
     @mock.patch('SMS.db.models.Usage')
     def test_get_usages(self, usage_mock, session_mock):
+        # if user_id = '1'
         session_mock.query().options().filter_by().order_by().all.\
             return_value = 'filtered users'
-        session_mock.query.options().order_by().all.return_value = 'no filter'
+        ret = db_api.get_usages(user_id='1', session=session_mock)
+        # session_mock.query().options().filter_by.assert_called_once_with(id='1')
+        session_mock.query().options().filter_by.assert_called_with(id='1')
+        self.assertEqual('filtered users', ret)
 
-        ret1 = db_api.get_usages(user_id='1', session=session_mock)
-        ret2 = db_api.get_usages(user_id=None, session=session_mock)
+        # if user_id = None
+        session_mock.query().options().order_by().all.\
+            return_value = 'no filter'
+        ret = db_api.get_usages(user_id=None, session=session_mock)
 
-        # session_mock.query.assert_called_with(usage_mock)
-        # session_mock.query.options.filter_by.assert_called_with('1')
-        # session_mock.query.options.order_by.assert_called_once_with(
-        #    usage_mock.cpu)
-        # session_mock.query.options.filter_by.order_by.all.assert_called_once()
-        # session_mock.query.options.order_by.all.assert_called_once()
-        self.assertEqual('filtered users', ret1)
-        self.assertEqual('no filter', ret2)
-
-
-if __name__ == '__main__':
-    unittest.main()
+        self.assertEqual('no filter', ret)
+    
+        # other assertions
+        session_mock.query.assert_called_with(usage_mock)
+        session_mock.query().options().order_by.assert_called_with(
+            usage_mock.cpu)
