@@ -1,7 +1,7 @@
 import argparse
 
 import SMS.config
-from SMS.client import rpc
+from SMS.client import amqp
 from SMS import log
 
 CONF = SMS.config.CONF
@@ -17,11 +17,6 @@ def main():
     CONF.load_config(args.config_path)
     log.configure_logging()
 
-    # rpc_server = rpc.SMSClientRPCAPI()  # noqa
+    rmq = amqp.SMSClientAMQP()
 
-    # Ran out of time before adding some CLI. Here, have
-    # a PDB breakpoint instead.
-    # from SMS.db import api  # noqa
-    # import pdb; pdb.set_trace()  # noqa
-
-    # rpc_server.call()  # noqa
+    rmq.start_sending()
