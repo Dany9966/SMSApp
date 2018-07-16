@@ -39,8 +39,11 @@ def get_user(user_id=None, session=None):
 
 @session_utils.ensure_session
 def get_usages(user_id=None, session=None):
-    query = session.query(models.Usage).options(
-        joinedload(models.Usage.user))
     if user_id:
-        query.filter_by(id=user_id)
-    return query.order_by(models.Usage.cpu).all()
+        return session.query(models.Usage).options(
+            joinedload(models.Usage.user)).filter_by(id=user_id).\
+            order_by(models.Usage.cpu).all()
+
+    return session.query(models.Usage).options(
+        joinedload(models.Usage.user)).\
+        order_by(models.Usage.cpu).all()

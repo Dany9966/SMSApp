@@ -15,9 +15,8 @@ parser.add_argument('--config-path', required=True,
 
 def main():
     args = parser.parse_args()
-
     CONF.load_config(args.config_path)
-    print(CONF.log)
+
     log.configure_logging()
 
     db_api.initialize()
@@ -25,6 +24,3 @@ def main():
 
     rpc_server = rpc.SMSServerRPCAPI()
     rpc_server.accept()
-
-
-main()
