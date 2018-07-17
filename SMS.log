@@ -86,3 +86,42 @@
 [2018-07-16 15:30:16,511] INFO - Interrupted
 [2018-07-16 15:30:53,788] INFO - sent message: 8.1
 [2018-07-16 15:30:55,944] INFO - Interrupted
+[2018-07-16 15:43:17,537] INFO - sent message: 5.1
+[2018-07-16 15:43:22,544] INFO - sent message: 4.4
+[2018-07-16 15:43:27,551] INFO - sent message: 10.8
+[2018-07-16 15:43:32,558] INFO - sent message: 4.1
+[2018-07-16 15:43:37,564] INFO - sent message: 4.1
+[2018-07-16 15:43:42,568] INFO - sent message: 4.5
+[2018-07-16 15:43:47,575] INFO - sent message: 4.8
+[2018-07-16 15:43:52,577] INFO - sent message: 11.1
+[2018-07-16 15:43:57,584] INFO - sent message: 32.3
+[2018-07-16 15:44:02,591] INFO - sent message: 9.9
+[2018-07-16 15:44:07,598] INFO - sent message: 5.1
+[2018-07-16 15:44:12,601] INFO - sent message: 4.4
+[2018-07-16 15:44:17,608] INFO - sent message: 9.1
+[2018-07-16 15:44:22,613] INFO - sent message: 4.6
+[2018-07-16 15:44:27,620] INFO - sent message: 4.7
+[2018-07-16 15:44:32,626] INFO - sent message: 4.8
+[2018-07-16 15:44:37,633] INFO - sent message: 5.2
+[2018-07-16 15:44:42,635] INFO - sent message: 5.1
+[2018-07-16 15:44:47,641] INFO - sent message: 4.9
+[2018-07-16 15:44:52,649] INFO - sent message: 4.7
+[2018-07-16 15:44:57,656] INFO - sent message: 8.9
+[2018-07-16 15:45:02,663] INFO - sent message: 5.5
+[2018-07-16 15:45:03,454] INFO - Interrupted
+[2018-07-17 10:42:12,874] INFO - sent message: 1.9
+[2018-07-17 10:42:17,888] INFO - sent message: 1.9
+[2018-07-17 10:42:22,895] INFO - sent message: 2.0
+[2018-07-17 10:42:27,902] INFO - sent message: 1.5
+[2018-07-17 10:42:32,909] INFO - sent message: 5.8
+[2018-07-17 10:42:37,915] INFO - sent message: 6.7
+[2018-07-17 10:42:42,922] INFO - sent message: 1.3
+[2018-07-17 10:42:47,929] INFO - sent message: 1.6
+[2018-07-17 10:42:52,936] INFO - sent message: 1.5
+[2018-07-17 10:42:57,939] INFO - sent message: 2.0
+[2018-07-17 10:43:02,942] INFO - sent message: 1.8
+[2018-07-17 10:43:07,949] INFO - sent message: 2.1
+[2018-07-17 10:43:12,956] INFO - sent message: 1.2
+[2018-07-17 10:43:17,962] INFO - sent message: 1.7
+[2018-07-17 10:43:22,969] INFO - sent message: 1.5
+[2018-07-17 10:43:24,545] INFO - Interrupted
