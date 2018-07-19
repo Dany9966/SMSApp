@@ -15,6 +15,7 @@ def main():
     args = parser.parse_args()
 
     CONF.load_config(args.config_path)
+
     log.configure_logging()
 
     rmq = amqp.SMSClientAMQP()

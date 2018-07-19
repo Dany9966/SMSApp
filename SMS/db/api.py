@@ -1,5 +1,3 @@
-import platform
-
 from sqlalchemy.orm import joinedload
 
 
@@ -16,28 +14,10 @@ def create_tables():
 
 
 @session_utils.ensure_session
-def add_user(session=None):
-    user = models.User(hostname=platform.node())
-    return user.save()
-
-
-@session_utils.ensure_session
-def add_usage(user_id, timestamp, cpu, session=None):
-    usage = models.Usage(timestamp=timestamp, cpu=cpu, user_id=user_id)
+def add_usage(name, timestamp, m_type, m_value, session=None):
+    usage = models.Usage(hostname=name, timestamp=timestamp,
+                         metric_type=m_type, metric_value=m_value)
     return usage.save()
-
-
-@session_utils.ensure_session
-def get_users(session=None):
-    users = session.query(models.User).order_by(models.User.id).all()
-
-    return users
-
-
-@session_utils.ensure_session
-def get_user(user_id=None, session=None):
-    query = session.query(models.User)
-    return query.filter_by(id=user_id).one()
 
 
 @session_utils.ensure_session

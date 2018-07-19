@@ -1,8 +1,7 @@
 import json
 
-from sqlalchemy import ForeignKey, Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import as_declarative
-from sqlalchemy.orm import relationship
 
 from SMS.db import session as session_utils
 
@@ -33,44 +32,23 @@ def ModelJsonEncoder(obj):
         return json.dumps(obj)
 
 
-# USER TABLE
-    # hostname
-class User(BaseModel):
-    __tablename__ = 'users'
-
-    hostname = Column(String(32))
-
-    def __str__(self):
-        return 'Hostname: %s' % self.hostname
-
-    def __repr__(self):
-        return str(self)
-
-
 # Usage TABLE
     # timestamp
     # cpu + other to be added later on
 class Usage(BaseModel):
     __tablename__ = 'usages'
 
+    hostname = Column(String(32))
     timestamp = Column(DateTime())
-    cpu = Column(Integer)
-    user_id = Column(ForeignKey('users.id'))
-
-    user = relationship("User",
-                        back_populates='usages',
-                        order_by=User.id)
+    metric_type = Column(String(20))
+    metric_value = Column(Integer)
 
     def __str__(self):
-        return '%(user)s: %(timestamp)s - %(cpu)s'\
-            % {'user': self.user.hostname,
-               'message': self.timestamp,
-               'cpu': self.cpu}
+        return '%(user)s: %(timestamp)s - %(m_type)s : %(m_value)s'\
+            % {'user': self.hostname,
+               'timestamp': self.timestamp,
+               'm_type': self.metric_type,
+               'm_value': self.metric_value}
 
     def __repr__(self):
         return str(self)
-
-
-User.usages = relationship("Usage",
-                           back_populates='users',
-                           order_by=Usage.id)

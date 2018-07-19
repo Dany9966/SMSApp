@@ -125,3 +125,49 @@
 [2018-07-17 10:43:17,962] INFO - sent message: 1.7
 [2018-07-17 10:43:22,969] INFO - sent message: 1.5
 [2018-07-17 10:43:24,545] INFO - Interrupted
+[2018-07-19 12:45:28,823] WARNING - Interrupted
+[2018-07-19 12:51:54,086] WARNING - Interrupted
+[2018-07-19 12:52:29,524] INFO - sent message: 8.5
+[2018-07-19 12:52:30,070] WARNING - Interrupted
+[2018-07-19 12:54:12,267] INFO - sent message: 8.2
+[2018-07-19 12:54:17,274] INFO - sent message: 14.5
+[2018-07-19 12:54:19,573] WARNING - Interrupted
+[2018-07-19 12:54:26,441] INFO - sent message: 3.6
+[2018-07-19 12:54:31,448] INFO - sent message: 7.7
+[2018-07-19 12:54:36,455] INFO - sent message: 3.6
+[2018-07-19 12:54:41,460] INFO - sent message: 3.5
+[2018-07-19 12:54:41,724] WARNING - Interrupted
+[2018-07-19 14:32:09,248] WARNING - Interrupted
+[2018-07-19 14:32:21,898] WARNING - Interrupted
+[2018-07-19 14:32:51,020] WARNING - Interrupted
+[2018-07-19 14:40:45,104] WARNING - Interrupted
+[2018-07-19 15:31:47,881] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:31:46.879235", "hostname": "danipc", "metric_value": "1.5"}
+[2018-07-19 15:31:48,884] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:31:47.882409", "hostname": "danipc", "metric_value": "1.0"}
+[2018-07-19 15:31:49,888] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:31:48.885394", "hostname": "danipc", "metric_value": "1.5"}
+[2018-07-19 15:31:50,891] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:31:49.888543", "hostname": "danipc", "metric_value": "1.3"}
+[2018-07-19 15:31:51,894] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:31:50.891601", "hostname": "danipc", "metric_value": "2.3"}
+[2018-07-19 15:31:52,897] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:31:51.894644", "hostname": "danipc", "metric_value": "1.3"}
+[2018-07-19 15:31:53,900] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:31:52.897638", "hostname": "danipc", "metric_value": "1.3"}
+[2018-07-19 15:31:54,903] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:31:53.900712", "hostname": "danipc", "metric_value": "1.5"}
+[2018-07-19 15:31:55,906] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:31:54.903757", "hostname": "danipc", "metric_value": "4.0"}
+[2018-07-19 15:31:56,909] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:31:55.906630", "hostname": "danipc", "metric_value": "1.8"}
+[2018-07-19 15:31:57,912] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:31:56.909677", "hostname": "danipc", "metric_value": "3.8"}
+[2018-07-19 15:31:58,915] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:31:57.912767", "hostname": "danipc", "metric_value": "3.0"}
+[2018-07-19 15:31:59,917] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:31:58.915840", "hostname": "danipc", "metric_value": "4.5"}
+[2018-07-19 15:32:00,920] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:31:59.917734", "hostname": "danipc", "metric_value": "3.0"}
+[2018-07-19 15:32:01,923] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:32:00.920662", "hostname": "danipc", "metric_value": "2.8"}
+[2018-07-19 15:32:02,926] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:32:01.923662", "hostname": "danipc", "metric_value": "1.3"}
+[2018-07-19 15:32:03,929] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:32:02.926630", "hostname": "danipc", "metric_value": "1.5"}
+[2018-07-19 15:32:04,932] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:32:03.929616", "hostname": "danipc", "metric_value": "3.3"}
+[2018-07-19 15:32:05,935] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:32:04.932610", "hostname": "danipc", "metric_value": "2.0"}
+[2018-07-19 15:32:06,938] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:32:05.935591", "hostname": "danipc", "metric_value": "2.0"}
+[2018-07-19 15:32:07,941] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:32:06.938710", "hostname": "danipc", "metric_value": "1.5"}
+[2018-07-19 15:32:08,944] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:32:07.941386", "hostname": "danipc", "metric_value": "1.8"}
+[2018-07-19 15:32:09,947] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:32:08.945217", "hostname": "danipc", "metric_value": "2.0"}
+[2018-07-19 15:32:10,949] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:32:09.947420", "hostname": "danipc", "metric_value": "1.8"}
+[2018-07-19 15:32:11,953] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:32:10.950324", "hostname": "danipc", "metric_value": "1.5"}
+[2018-07-19 15:32:12,604] WARNING - Interrupted
+[2018-07-19 15:33:01,483] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:33:00.480891", "hostname": "danipc", "metric_value": "1.3"}
+[2018-07-19 15:33:12,538] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:33:11.535924", "hostname": "danipc", "metric_value": "3.0"}
+[2018-07-19 15:33:18,547] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:33:17.544620", "hostname": "danipc", "metric_value": "0.8"}
+[2018-07-19 15:33:24,556] INFO - sent message: {"metric_type": "cpu_percentage_used", "timestamp": "2018-07-19 15:33:23.553287", "hostname": "danipc", "metric_value": "1.3"}
