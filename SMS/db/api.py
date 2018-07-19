@@ -1,4 +1,7 @@
+import platform
+
 from sqlalchemy.orm import joinedload
+
 
 from SMS.db import models
 from SMS.db import session as session_utils
@@ -13,8 +16,8 @@ def create_tables():
 
 
 @session_utils.ensure_session
-def add_user(name, session=None):
-    user = models.User(username=name)
+def add_user(session=None):
+    user = models.User(hostname=platform.node())
     return user.save()
 
 

@@ -6,6 +6,17 @@ import SMS.db.api as db_api
 
 
 class TestAPI(unittest.TestCase):
+    @mock.patch('SMS.db.session.initialize')
+    def test_initialize(self, sess_mock):
+        db_api.initialize()
+        sess_mock.assert_called_once()
+
+    @mock.patch('SMS.db.models.BaseModel.metadata.create_all')
+    @mock.patch('SMS.db.session.engine')
+    def test_create_tables(self, eng_mock, create_mock):
+        db_api.create_tables()
+        create_mock.assert_called_once_with(eng_mock)
+
     @mock.patch('SMS.db.session.ensure_session')
     @mock.patch('SMS.db.models.User')
     def test_add_user(self, user_mock, session_mock):

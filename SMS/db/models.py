@@ -1,9 +1,8 @@
 import json
-import uuid
 
 from sqlalchemy import ForeignKey, Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import as_declarative
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship
 
 from SMS.db import session as session_utils
 
@@ -13,13 +12,9 @@ from SMS.db import session as session_utils
 @as_declarative()
 class BaseModel(object):
     id = Column(Integer, primary_key=True)
-    uuid = Column(String(36), nullable=True)
 
     @session_utils.ensure_session
     def save(self, session=None):
-        if not self.uuid:
-            self.uuid = str(uuid.uuid4())
-
         session.add(self)
         session.flush()
         session.refresh(self)
@@ -39,15 +34,14 @@ def ModelJsonEncoder(obj):
 
 
 # USER TABLE
-    # username
-    # pass?
+    # hostname
 class User(BaseModel):
     __tablename__ = 'users'
 
-    username = Column(String(32))
+    hostname = Column(String(32))
 
     def __str__(self):
-        return 'Username: %s' % self.username
+        return 'Hostname: %s' % self.hostname
 
     def __repr__(self):
         return str(self)
@@ -55,7 +49,7 @@ class User(BaseModel):
 
 # Usage TABLE
     # timestamp
-    # cpu
+    # cpu + other to be added later on
 class Usage(BaseModel):
     __tablename__ = 'usages'
 
@@ -63,14 +57,20 @@ class Usage(BaseModel):
     cpu = Column(Integer)
     user_id = Column(ForeignKey('users.id'))
 
-    user = relationship("User", backref=backref('usages'),
-                        order_by='User.id', lazy='joined')
+    user = relationship("User",
+                        back_populates='usages',
+                        order_by=User.id)
 
     def __str__(self):
         return '%(user)s: %(timestamp)s - %(cpu)s'\
-            % {'user': self.user.name,
+            % {'user': self.user.hostname,
                'message': self.timestamp,
                'cpu': self.cpu}
 
     def __repr__(self):
         return str(self)
+
+
+User.usages = relationship("Usage",
+                           back_populates='users',
+                           order_by=Usage.id)
