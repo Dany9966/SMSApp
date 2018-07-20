@@ -33,7 +33,13 @@ class SMSServerAMQP(object):
                                queue='usage',
                                no_ack=True)
     print("Waiting for cpu usages")
-    self.channel.start_consuming()
+
+    try:
+      self.channel.start_consuming()
+    except KeyboardInterrupt:
+      LOG.warning('Interrupted')
+      self.connection.close()
+      pass
 
   def on_receive(self, ch, method, props, body):
     rec_usage = json.loads(body)

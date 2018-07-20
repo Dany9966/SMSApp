@@ -3,3 +3,4 @@ sudo -H pip install --upgrade pip
 sudo -H pip install setuptools
 sudo rabbitmqctl add_user stackrabbit Passw0rd
 sudo rabbitmqctl set_permissions stackrabbit ".*" ".*" ".*"
+cd ../.. ; sudo -H pip install .

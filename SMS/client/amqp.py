@@ -30,7 +30,7 @@ class SMSClientAMQP(object):
   def start_sending(self):
     self.channel.queue_declare(queue='usage')
     # for metrics, get list of trues
-    # for every metric listed, add its usage in api module
+
     metric_list = []
     for name, value in CONF._parser.items('metrics')[1:]:
       if value.lower() == "true":
@@ -41,8 +41,10 @@ class SMSClientAMQP(object):
       sys.exit()
 
     while True:
-      for metric in metric_list:
-        try:
+      # for every metric listed, add its usage to DB
+      try:
+        for metric in metric_list:
+
           body = json.dumps(
               {'hostname': platform.node(),
                'timestamp': str(datetime.now()),
@@ -53,9 +55,9 @@ class SMSClientAMQP(object):
                                      routing_key='usage',
                                      body=str(body))
           LOG.info('sent message: %s' % body)
-        except KeyboardInterrupt:
-          LOG.warning('Interrupted')
-          self.connection.close()
-          break
 
-      time.sleep(int(CONF.metrics.time_interval))
+        time.sleep(int(CONF.metrics.time_interval))
+      except KeyboardInterrupt:
+        LOG.warning('Interrupted')
+        self.connection.close()
+        break
