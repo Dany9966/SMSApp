@@ -5,9 +5,10 @@ from sqlalchemy.ext.declarative import as_declarative
 
 from SMS.db import session as session_utils
 
-
 # BaseModel TABLE
 # id
+
+
 @as_declarative()
 class BaseModel(object):
     id = Column(Integer, primary_key=True)
