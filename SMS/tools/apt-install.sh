@@ -1,3 +1,4 @@
+sudo apt-get update
 script_path=`dirname $0`
 cd $script_path/../..
 sudo apt-get install -y python python-dev python-pip rabbitmq-server
