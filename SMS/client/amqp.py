@@ -14,7 +14,13 @@ CONF = SMS.config.CONF
 LOG = log.get_logger()
 
 
+def get_now():
+  return datetime.now()
+
+
 class SMSClientAMQP(object):
+  metric_list = []
+
   def __init__(self):
     self.creds = pika.PlainCredentials(CONF.amqp.user,
                                        CONF.amqp.password)
@@ -31,23 +37,22 @@ class SMSClientAMQP(object):
     self.channel.queue_declare(queue='usage')
     # for metrics, get list of trues
 
-    metric_list = []
     for name, value in CONF._parser.items('metrics')[1:]:
       if value.lower() == "true":
-        metric_list.append(name)
+        self.metric_list.append(name)
 
-    if metric_list == []:
+    if self.metric_list == []:
       LOG.error('No metrics set! Exiting...')
       sys.exit()
 
     while True:
       # for every metric listed, add its usage to DB
       try:
-        for metric in metric_list:
+        for metric in self.metric_list:
 
           body = json.dumps(
               {'hostname': platform.node(),
-               'timestamp': str(datetime.now()),
+               'timestamp': str(get_now()),
                'metric_type': metric,
                'metric_value': getattr(m_col, metric)()})
 
