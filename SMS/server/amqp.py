@@ -40,7 +40,7 @@ class SMSServerAMQP(object):
     try:
       self.channel.start_consuming()
     except KeyboardInterrupt:
-      print('interrupt')
+      # print('interrupt')
       LOG.warning('Interrupted')
       self.connection.close()
 
