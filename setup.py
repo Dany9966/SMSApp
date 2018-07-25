@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name="SMS",
@@ -8,7 +8,7 @@ setup(
 Supercalifragilisticexpialidocius Monitoring System (SMS) that monitors client
 system resource usage (i.e. CPU percentage) and stores data on server app
 """,
-    packages=['SMS'],
+    packages=find_packages(),
     install_requires=['pika', 'sqlalchemy', 'psutil'],
     entry_points={
         'console_scripts': [
