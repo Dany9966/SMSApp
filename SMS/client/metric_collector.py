@@ -10,4 +10,4 @@ def cpu_percentage_used():
 
 
 def memory_used():
-    return psutil.virtual_memory().used / (1024 ** 2)
+    return int(psutil.virtual_memory().used / (1024 ** 2))

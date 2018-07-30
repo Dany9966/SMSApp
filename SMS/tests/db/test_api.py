@@ -38,7 +38,8 @@ class TestAPI(unittest.TestCase):
     def test_get_usages1(self, usage_mock, session_mock):
         # if user_id = '1'
         session_mock.query.return_value.options.return_value.filter_by.\
-            return_value.order_by.return_value.all.return_value = 'filtered users'
+            return_value.order_by.return_value.all.\
+            return_value = 'filtered users'
 
         ret = db_api.get_usages(user_id='1', session=session_mock)
         session_mock.query.assert_called_once_with(usage_mock)
