@@ -1,4 +1,0 @@
-[console_scripts]
-SMS_client = SMS.cmd.client:main
-SMS_server = SMS.cmd.server:main
-
