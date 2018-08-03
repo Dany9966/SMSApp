@@ -1,10 +1,12 @@
 import argparse
+import threading
 
 import SMS.config
 
 from SMS.db import api as db_api
 from SMS.server import amqp
 from SMS import log
+import SMS.app
 
 CONF = SMS.config.CONF
 
@@ -21,6 +23,6 @@ def main():
 
     db_api.initialize()
     db_api.create_tables()
-
+    threading.Thread(target=SMS.app.app.run).start()
     rmq = amqp.SMSServerAMQP()
     rmq.accept()

@@ -51,33 +51,31 @@ class TestSMSServerAMQP(unittest.TestCase):
     @mock.patch('SMS.db.api.add_usage', return_value=1)
     @mock.patch('SMS.server.amqp.get_datetime_obj', return_value='obj')
     @mock.patch.object(SMS.server.amqp, 'LOG')
-    @mock.patch('json.loads', return_value={'hostname': 'host',
-                                            'timestamp': 'now',
-                                            'metric_type': 'cpu',
-                                            'metric_value': '2'})
+    @mock.patch('json.loads', return_value={'metrics':
+                                            [{'hostname': 'host',
+                                              'timestamp': 'now',
+                                              'metric_type': 'cpu',
+                                              'metric_value': '2'}]})
     @mock.patch('pika.PlainCredentials')
     @mock.patch('pika.BlockingConnection')
     @mock.patch('pika.ConnectionParameters')
     @mock.patch.object(SMS.server.amqp, 'CONF')
     def test_on_receive(self, conf_mock, cp_mock, bc_mock, pc_mock,
                         json_mock, log_mock, date_mock, api_mock):
-        body = "\
-            {'hostname': 'node',\
+        body = "{'metrics': \
+            [{'hostname': 'node',\
              'timestamp': 'now',\
              'metric_type': 'cpu',\
-             'metric_value': '2'}"
+             'metric_value': '2'}]}"
 
         obj = self.test_init()
         obj.on_receive(None, None, None, body)
 
         json_mock.assert_called_once_with(body)
-        date_mock.assert_called_once_with(json_mock.return_value['timestamp'])
+        date_mock.assert_called_once_with(
+            json_mock.return_value['metrics'][0]['timestamp'])
         api_mock.assert_called_once_with(
-            name=json_mock.return_value['hostname'],
+            name=json_mock.return_value['metrics'][0]['hostname'],
             timestamp=date_mock.return_value,
-            m_type=json_mock.return_value['metric_type'],
-            m_value=json_mock.return_value['metric_value'])
-
-
-if __name__ == '__main__':
-    unittest.main()
+            m_type=json_mock.return_value['metrics'][0]['metric_type'],
+            m_value=json_mock.return_value['metrics'][0]['metric_value'])

@@ -1,8 +1,8 @@
 import psutil
 
 
-def initialize():
-    psutil.cpu_percent(interval=1)
+# def initialize():
+#    psutil.cpu_percent(interval=1)
 
 
 def cpu_percentage_used():

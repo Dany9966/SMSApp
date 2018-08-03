@@ -35,17 +35,15 @@ class TestSMSClientAMQP(unittest.TestCase):
     @mock.patch.object(SMS.client.amqp, 'CONF')
     def test_start_sending1(self, conf_mock, cp_mock, bc_mock, pc_mock,
                             log_mock):
-        conf_mock._parser.items.return_value = [
-            ('time', '5'), ('cpu_percentage_used', 'false'),
-            ('memory', 'false')]
+        conf_mock.metrics.list.split.return_value = ['']
 
         client = self.test_init()
         with self.assertRaises(SystemExit):
             client.start_sending()
 
         client.channel.queue_declare.assert_called_once_with(queue='usage')
-        conf_mock._parser.items.assert_called_once_with('metrics')
-        self.assertEqual([], client.metric_list)
+        conf_mock.metrics.list.split.assert_called_once_with(", ")
+        self.assertEqual([''], client.metric_list)
         log_mock.error.assert_called_once_with('No metrics set! Exiting...')
 
     @mock.patch('time.sleep', side_effect=KeyboardInterrupt)
@@ -61,21 +59,19 @@ class TestSMSClientAMQP(unittest.TestCase):
     def test_start_sending2(self, conf_mock, cp_mock, bc_mock, pc_mock,
                             log_mock, json_mock, node_mock, now_mock,
                             m_col_mock, time_mock):
-        conf_mock._parser.items.return_value = [
-            ('time', '5'), ('cpu_percentage_used', 'true'),
-            ('memory', 'false')]
+        conf_mock.metrics.list.split.return_value = ['cpu_percentage_used']
         json_mock.return_value = "\
-            {'hostname': 'node',\
+            {'metrics': [{'hostname': 'node',\
              'timestamp': 'now',\
              'metric_type': 'cpu_percentage_used',\
-             'metric_value': '2'}"
+             'metric_value': '2'}]}"
         conf_mock.metrics.time_interval = '5'
 
         client = self.test_init()
         client.start_sending()
 
         client.channel.queue_declare.assert_called_once_with(queue='usage')
-        conf_mock._parser.items.assert_called_once_with('metrics')
+        conf_mock.metrics.list.split.assert_called_once_with(", ")
         self.assertEqual(['cpu_percentage_used'], client.metric_list)
         json_mock.assert_called_once()
         m_col_mock.assert_called_once_with()
