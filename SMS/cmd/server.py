@@ -1,5 +1,5 @@
 import argparse
-import threading
+from multiprocessing import Process
 
 import SMS.config
 
@@ -23,6 +23,9 @@ def main():
 
     db_api.initialize()
     db_api.create_tables()
-    threading.Thread(target=SMS.app.app.run).start()
+    server = Process(target=SMS.app.app.run)
+    server.start()
     rmq = amqp.SMSServerAMQP()
     rmq.accept()
+    server.terminate()
+    server.join()

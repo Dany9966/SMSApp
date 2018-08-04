@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+# from datetime import datetime
 
 import pika
 
@@ -13,8 +13,8 @@ CONF = SMS.config.CONF
 LOG = log.get_logger()
 
 
-def get_datetime_obj(datetime_str):
-    return datetime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S.%f')
+# def get_datetime_obj(datetime_str):
+#     return datetime.strptime(datetime_str, '%Y-%m-%dT%H:%M:%S.%f')
 
 
 class SMSServerAMQP(object):
@@ -49,11 +49,11 @@ class SMSServerAMQP(object):
         LOG.info('Got metrics: %s' % body)
 
         for metric in rec_usage['metrics']:
-            datetime_obj = get_datetime_obj(metric.get('timestamp'))
+            # datetime_obj = get_datetime_obj(metric.get('timestamp'))
 
             row = db_api.add_usage(
                 name=metric.get('hostname'),
-                timestamp=datetime_obj,
+                timestamp=metric.get('timestamp'),
                 m_type=metric.get('metric_type'),
                 m_value=metric.get('metric_value'))
 

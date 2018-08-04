@@ -40,7 +40,7 @@ class Usage(BaseModel):
     __tablename__ = 'usages'
 
     hostname = Column(String(32))
-    timestamp = Column(DateTime())
+    timestamp = Column(String(26))
     metric_type = Column(String(20))
     metric_value = Column(Integer)
 

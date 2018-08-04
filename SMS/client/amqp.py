@@ -15,52 +15,52 @@ LOG = log.get_logger()
 
 
 def get_now():
-    return datetime.now()
+  return datetime.now().isoformat()
 
 
 class SMSClientAMQP(object):
-    metric_list = []
+  metric_list = []
 
-    def __init__(self):
-        self.creds = pika.PlainCredentials(CONF.amqp.user,
-                                           CONF.amqp.password)
+  def __init__(self):
+    self.creds = pika.PlainCredentials(CONF.amqp.user,
+                                       CONF.amqp.password)
 
-        self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=CONF.amqp.url,
-                                      port=int(CONF.amqp.port),
-                                      virtual_host=CONF.amqp.vhost,
-                                      credentials=self.creds))
+    self.connection = pika.BlockingConnection(
+        pika.ConnectionParameters(host=CONF.amqp.url,
+                                  port=int(CONF.amqp.port),
+                                  virtual_host=CONF.amqp.vhost,
+                                  credentials=self.creds))
 
-        self.channel = self.connection.channel()
+    self.channel = self.connection.channel()
 
-    def start_sending(self):
-        self.channel.queue_declare(queue='usage')
-        # get list of metrics from conf file
-        self.metric_list = CONF.metrics.list.split(", ")
+  def start_sending(self):
+    self.channel.queue_declare(queue='usage')
+    # get list of metrics from conf file
+    self.metric_list = CONF.metrics.list.split(", ")
 
-        if self.metric_list == ['']:
-            LOG.error('No metrics set! Exiting...')
-            sys.exit()
+    if self.metric_list == ['']:
+      LOG.error('No metrics set! Exiting...')
+      sys.exit()
 
-        while True:
-            # for every metric listed, add its usage to DB
-            try:
-                body_m_list = []
-                for metric in self.metric_list:
-                    body_m_list.append(
-                        {'hostname': platform.node(),
-                         'timestamp': str(get_now()),
-                         'metric_type': metric,
-                         'metric_value': getattr(m_col, metric)()})
+    while True:
+      # for every metric listed, add its usage to DB
+      try:
+        body_m_list = []
+        for metric in self.metric_list:
+          body_m_list.append(
+              {'hostname': platform.node(),
+               'timestamp': get_now(),
+               'metric_type': metric,
+               'metric_value': getattr(m_col, metric)()})
 
-                body = json.dumps({'metrics': body_m_list})
-                self.channel.basic_publish(exchange='',
-                                           routing_key='usage',
-                                           body=str(body))
-                LOG.info('sent message: %s' % body)
+        body = json.dumps({'metrics': body_m_list})
+        self.channel.basic_publish(exchange='',
+                                   routing_key='usage',
+                                   body=str(body))
+        LOG.info('sent message: %s' % body)
 
-                time.sleep(int(CONF.metrics.time_interval))
-            except KeyboardInterrupt:
-                LOG.warning('Interrupted')
-                self.connection.close()
-                break
+        time.sleep(int(CONF.metrics.time_interval))
+      except KeyboardInterrupt:
+        LOG.warning('Interrupted')
+        self.connection.close()
+        break
