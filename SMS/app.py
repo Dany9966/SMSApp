@@ -1,4 +1,6 @@
-from flask import Flask, request, render_template
+import json
+
+from flask import Flask, request
 
 import SMS.db.api as db_api
 app = Flask(__name__)
@@ -8,6 +10,15 @@ app = Flask(__name__)
 def index():
     return '<h1>Welcome to the Supercalifragilisticexpialidocius Monitoring\
             System (SMS)</h1>'
+
+
+def json_builder(usage):
+    return {
+        "hostname": usage.hostname,
+        "timestamp": usage.timestamp,
+        "metric_type": usage.metric_type,
+        "metric_value": usage.metric_value,
+    }
 
 
 @app.route('/metrics')
@@ -28,8 +39,9 @@ def metrics():
     response_list = db_api.resp_flask(hostname=hostname, m_type=m_type,
                                       start_time=start_time,
                                       end_time=end_time)
-    return render_template('metric.html', resp_list=response_list)
-    # TODO return html template
+
+    response_list = [json_builder(elem) for elem in response_list]
+    return json.dumps({'metrics': response_list})
 
 # if __name__ == '__main__':
 #     app.run(debug=True)
