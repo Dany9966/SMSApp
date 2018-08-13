@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 from flask import Flask, request
 
@@ -15,9 +16,10 @@ def index():
 def json_builder(usage):
     return {
         "hostname": usage.hostname,
-        "timestamp": usage.timestamp,
+        "timestamp": datetime.strftime(usage.timestamp, "%Y-%m-%dT%H:%M:%S"),
         "metric_type": usage.metric_type,
         "metric_value": usage.metric_value,
+        "metric_unit": usage.metric_unit
     }
 
 

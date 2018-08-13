@@ -1,8 +1,8 @@
 import json
 
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import as_declarative
-
+from datetime import datetime
 from SMS.db import session as session_utils
 
 # BaseModel TABLE
@@ -40,20 +40,24 @@ class Usage(BaseModel):
     __tablename__ = 'usages'
 
     hostname = Column(String(32))
-    timestamp = Column(String(26))
+    timestamp = Column(DateTime())
     metric_type = Column(String(20))
     metric_value = Column(Integer)
+    metric_unit = Column(String(5))
 
     def __str__(self):
         return '{\
                  "hostname": %(user)s,\
                  "timestamp": %(timestamp)s,\
                  "metric_type": %(m_type)s,\
-                 "metric_value": %(m_value)s\
+                 "metric_value": %(m_value)s,\
+                 "metric_unit": %(m_unit)s\
                 }' % {'user': self.hostname,
-                      'timestamp': self.timestamp,
+                      'timestamp': datetime.strftime(self.timestamp,
+                                                     "%Y-%m-%dT%H:%M:%S%z"),
                       'm_type': self.metric_type,
-                      'm_value': self.metric_value}
+                      'm_value': self.metric_value,
+                      'm_unit': self.metric_unit}
 
     def __repr__(self):
         return str(self)

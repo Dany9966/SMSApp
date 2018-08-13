@@ -15,7 +15,7 @@ LOG = log.get_logger()
 
 
 def get_now():
-    return datetime.now().isoformat()
+    return datetime.strftime(datetime.now(), "%Y-%m-%dT%H:%M:%S")
 
 
 class SMSClientAMQP(object):
@@ -50,8 +50,7 @@ class SMSClientAMQP(object):
                     body_m_list.append(
                         {'hostname': platform.node(),
                          'timestamp': get_now(),
-                         'metric_type': metric,
-                         'metric_value': getattr(m_col, metric)()})
+                         'metric': getattr(m_col, metric)()})
 
                 body = json.dumps({'metrics': body_m_list})
                 self.channel.basic_publish(exchange='',

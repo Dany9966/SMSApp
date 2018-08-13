@@ -15,9 +15,10 @@ def create_tables():
 
 
 @session_utils.ensure_session
-def add_usage(name, timestamp, m_type, m_value, session=None):
+def add_usage(name, timestamp, m_type, m_value, m_unit, session=None):
     usage = models.Usage(hostname=name, timestamp=timestamp,
-                         metric_type=m_type, metric_value=m_value)
+                         metric_type=m_type, metric_value=m_value,
+                         metric_unit=m_unit)
     return usage.save()
 
 
