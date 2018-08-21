@@ -1,5 +1,4 @@
 import json
-# from datetime import datetime
 
 from flask import Flask, request
 
@@ -13,16 +12,6 @@ app = Flask(__name__)
 def index():
     return '<h1>Welcome to the Supercalifragilisticexpialidocius Monitoring\
             System (SMS)</h1>'
-
-
-# def json_builder(usage):
-#     return {
-#         "hostname": usage.hostname,
-#         "timestamp": datetime.strftime(usage.timestamp, "%Y-%m-%dT%H:%M:%S"),
-#         "metric_type": usage.metric_type,
-#         "metric_value": usage.metric_value,
-#         "metric_unit": usage.metric_unit
-#     }
 
 
 @app.route('/metrics')
@@ -40,12 +29,9 @@ def metrics():
         start_time = request.args['start_time']
     if 'end_time' in query_str:
         end_time = request.args['end_time']
-    response_list = db_api.resp_flask(hostname=hostname, m_type=m_type,
-                                      start_time=start_time,
-                                      end_time=end_time)
+    response_list = db_api.get_usage(hostname=hostname, m_type=m_type,
+                                     start_time=start_time,
+                                     end_time=end_time)
 
     response_list = [mods.ModelJsonEncoder(elem) for elem in response_list]
     return json.dumps({'metrics': response_list})
-
-# if __name__ == '__main__':
-#     app.run(debug=True)
