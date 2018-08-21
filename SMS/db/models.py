@@ -21,7 +21,7 @@ class BaseModel(object):
         return self.id
 
     def _to_dict(self):
-        _dict = {col.name: getattr(self, col.name)
+        _dict = {col.name: datetime_convert(getattr(self, col.name))
                  for col in self.__table__.columns}
         return _dict
 
@@ -33,9 +33,20 @@ def ModelJsonEncoder(obj):
         return json.dumps(obj)
 
 
+def datetime_convert(obj):
+    # Had to do this particular convertor since datetime objects are not json
+    # serializable AND I need a 'T' between date and time
+
+    if isinstance(obj, datetime):
+        return datetime.strftime(obj, '%Y-%m-%dT%H:%M:%S')
+    else:
+        return obj
+
 # Usage TABLE
     # timestamp
     # cpu + other to be added later on
+
+
 class Usage(BaseModel):
     __tablename__ = 'usages'
 

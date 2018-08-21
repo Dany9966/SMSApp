@@ -1,9 +1,11 @@
 import json
-from datetime import datetime
+# from datetime import datetime
 
 from flask import Flask, request
 
 import SMS.db.api as db_api
+import SMS.db.models as mods
+
 app = Flask(__name__)
 
 
@@ -13,14 +15,14 @@ def index():
             System (SMS)</h1>'
 
 
-def json_builder(usage):
-    return {
-        "hostname": usage.hostname,
-        "timestamp": datetime.strftime(usage.timestamp, "%Y-%m-%dT%H:%M:%S"),
-        "metric_type": usage.metric_type,
-        "metric_value": usage.metric_value,
-        "metric_unit": usage.metric_unit
-    }
+# def json_builder(usage):
+#     return {
+#         "hostname": usage.hostname,
+#         "timestamp": datetime.strftime(usage.timestamp, "%Y-%m-%dT%H:%M:%S"),
+#         "metric_type": usage.metric_type,
+#         "metric_value": usage.metric_value,
+#         "metric_unit": usage.metric_unit
+#     }
 
 
 @app.route('/metrics')
@@ -42,7 +44,7 @@ def metrics():
                                       start_time=start_time,
                                       end_time=end_time)
 
-    response_list = [json_builder(elem) for elem in response_list]
+    response_list = [mods.ModelJsonEncoder(elem) for elem in response_list]
     return json.dumps({'metrics': response_list})
 
 # if __name__ == '__main__':

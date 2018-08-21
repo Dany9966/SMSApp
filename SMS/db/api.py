@@ -1,4 +1,4 @@
-from sqlalchemy.orm import joinedload
+# from sqlalchemy.orm import joinedload
 # from sqlalchemy import or_
 
 
@@ -38,28 +38,30 @@ def resp_flask(hostname=None, m_type=None, start_time=None, end_time=None,
     return q.all()
 
 
-@session_utils.ensure_session
-def all_usages(session=None):
-    return session.query(models.Usage)
+# left-over API functions, so far the app only really needs the ones above
+
+# @session_utils.ensure_session
+# def all_usages(session=None):
+#     return session.query(models.Usage)
 
 
-@session_utils.ensure_session
-def get_host(hostname, session=None):
-    return session.query(models.Usage).filter_by(hostname=hostname).first()
+# @session_utils.ensure_session
+# def get_host(hostname, session=None):
+#     return session.query(models.Usage).filter_by(hostname=hostname).first()
 
 
-@session_utils.ensure_session
-def get_type(m_type, obj, session=None):
-    return obj.filter_by(metric_type=m_type)
+# @session_utils.ensure_session
+# def get_type(m_type, obj, session=None):
+#     return obj.filter_by(metric_type=m_type)
 
 
-@session_utils.ensure_session
-def get_usages(user_id=None, session=None):
-    if user_id:
-        return session.query(models.Usage).options(
-            joinedload(models.Usage.user)).filter_by(id=user_id).\
-            order_by(models.Usage.cpu).all()
+# @session_utils.ensure_session
+# def get_usages(user_id=None, session=None):
+#     if user_id:
+#         return session.query(models.Usage).options(
+#             joinedload(models.Usage.user)).filter_by(id=user_id).\
+#             order_by(models.Usage.cpu).all()
 
-    return session.query(models.Usage).options(
-        joinedload(models.Usage.user)).\
-        order_by(models.Usage.cpu).all()
+#     return session.query(models.Usage).options(
+#         joinedload(models.Usage.user)).\
+#         order_by(models.Usage.cpu).all()
