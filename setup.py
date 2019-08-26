@@ -14,6 +14,7 @@ system resource usage (i.e. CPU percentage) and stores data on server app
         'console_scripts': [
             'SMS_client = SMS.cmd.client:main',
             'SMS_server = SMS.cmd.server:main',
+            'SMS_web = SMS.cmd.web:main'
         ],
     }
 )
