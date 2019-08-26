@@ -32,6 +32,7 @@ def get_temp_session():
         session = get_new_session()
         yield session
     finally:
+        # import pdb; pdb.set_trace()
         session.commit()
         session.close()
 

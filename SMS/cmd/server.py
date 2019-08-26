@@ -3,7 +3,7 @@ import argparse
 from SMS import config
 from SMS.db import api as db_api
 from SMS.server import amqp
-from SMS import log
+from SMS import utils
 
 CONF = config.CONF
 
@@ -13,10 +13,7 @@ parser.add_argument('--config-path', required=True,
 
 
 def main():
-    args = parser.parse_args()
-    CONF.load_config(args.config_path)
-
-    log.configure_logging()
+    utils.setup_cmd(parser, CONF)
 
     db_api.initialize()
     db_api.create_tables()
