@@ -10,8 +10,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return '<h1>Welcome to the Supercalifragilisticexpialidocius Monitoring\
-            System (SMS)</h1>'
+    return '<h1>Welcome to the Super Monitoring System (SMS)</h1>'
 
 
 @app.route('/metrics')

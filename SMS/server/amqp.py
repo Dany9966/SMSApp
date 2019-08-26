@@ -32,9 +32,8 @@ class SMSServerAMQP(object):
 
     def accept(self):
         self.channel.queue_declare(queue='usage')
-        self.channel.basic_consume(self.on_receive,
-                                   queue='usage',
-                                   no_ack=True)
+        self.channel.basic_consume(queue='usage',
+                                   on_message_callback=self.on_receive)
         print("Waiting for usages")
 
         try:
