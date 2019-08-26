@@ -1,26 +1,32 @@
-import psutil
+from datetime import datetime
+import json
+import platform
+
+from SMS import config
+from SMS import log
+from SMS.client import metrics as metric_methods
+
+CONF = config.CONF
+LOG = log.get_logger()
 
 
-# def initialize():
-#    psutil.cpu_percent(interval=1)
+def get_now():
+    return datetime.strftime(datetime.now(), "%Y-%m-%dT%H:%M:%S")
 
 
-def cpu_percentage_used():
-    return {'type': 'cpu_percentage_used',
-            'value': psutil.cpu_percent(interval=None),
-            'unit': '%'}
+def collect():
+    # get list of metrics from conf file
+    metric_list = CONF.metrics.list.split(", ")
+    if metric_list == ['']:
+        LOG.error('No metrics set! Exiting...')
+        raise Exception
 
+    body_m_list = []
+    # for every metric listed in CONF, add its usage to body
+    for metric in metric_list:
+        body_m_list.append(
+            {'hostname': platform.node(),
+             'timestamp': get_now(),
+             'metric': getattr(metric_methods, metric)()})
 
-def memory_used():
-    return {'type': 'memory_used',
-            'value': int(psutil.virtual_memory().used / (1024 ** 2)),
-            'unit': 'MiB'
-            }
-
-
-def disk_used():
-    return {'type': 'disk_used',
-            'value': round(float(
-                psutil.disk_usage('/').used) / (1024 ** 3), 1),
-            'unit': 'GiB'
-            }
+    return json.dumps({'metrics': body_m_list})

@@ -1,25 +1,16 @@
 import time
-import sys
-import platform
-from datetime import datetime
 
 import pika
-import json
 
 import SMS.config
 from SMS import log
-import SMS.client.metric_collector as m_col
+from SMS.client import metric_collector
 
 CONF = SMS.config.CONF
 LOG = log.get_logger()
 
 
-def get_now():
-    return datetime.strftime(datetime.now(), "%Y-%m-%dT%H:%M:%S")
-
-
 class SMSClientAMQP(object):
-    metric_list = []
 
     def __init__(self):
         self.creds = pika.PlainCredentials(CONF.amqp.user,
@@ -35,24 +26,10 @@ class SMSClientAMQP(object):
 
     def start_sending(self):
         self.channel.queue_declare(queue='usage')
-        # get list of metrics from conf file
-        self.metric_list = CONF.metrics.list.split(", ")
-
-        if self.metric_list == ['']:
-            LOG.error('No metrics set! Exiting...')
-            sys.exit()
 
         while True:
-            # for every metric listed, add its usage to DB
             try:
-                body_m_list = []
-                for metric in self.metric_list:
-                    body_m_list.append(
-                        {'hostname': platform.node(),
-                         'timestamp': get_now(),
-                         'metric': getattr(m_col, metric)()})
-
-                body = json.dumps({'metrics': body_m_list})
+                body = metric_collector.collect()
                 self.channel.basic_publish(exchange='',
                                            routing_key='usage',
                                            body=str(body))
